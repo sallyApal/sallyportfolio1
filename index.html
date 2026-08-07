@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sally Asfour | Full Stack Developer</title>
+    <style>
+        /* --- DESIGN SYSTEM & PALETTE --- */
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-card: #121216;
+            --purple-glow: #a855f7;
+            --green-neon: #22c55e;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NEON UTILITIES --- */
+        .glow-text-purple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.6); color: var(--purple-glow); }
+        .glow-text-green { text-shadow: 0 0 15px rgba(34, 197, 94, 0.6); color: var(--green-neon); }
+        
+        /* --- NAVBAR --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 10%;
+        }
+
+        nav .logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav ul a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul a:hover {
+            color: var(--green-neon);
+        }
+
+        /* --- HERO SECTION (MIND-BLOWING INTRO) --- */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            padding-top: 80px;
+            gap: 4rem;
+            position: relative;
+        }
+
+        /* Cyberpunk abstract background element */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: var(--purple-glow);
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 550px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            border-radius: 24px;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--purple-glow), var(--green-neon));
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.25);
+        }
+
+        .hero-image {
+            width: 320px;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 16px;
+            display: block;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--purple-glow);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #b566ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--green-neon);
+            color: var(--green-neon);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(34, 197, 94, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 6rem 10%;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--green-neon);
+            border-radius: 2px;
+        }
+
+        /* --- PROJECTS SECTION --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-glow);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1);
+        }
+
+        .project-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--green-neon);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .project-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- EXPERIENCE & SKILLS SPLIT --- */
+        .profile-details-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+        }
+
+        .timeline {
+            border-left: 2px solid rgba(168, 85, 247, 0.3);
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: calc(-2rem - 7px);
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--green-neon);
+            box-shadow: 0 0 10px var(--green-neon);
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--green-neon);
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timeline-company {
+            font-size: 0.95rem;
+            color: var(--purple-glow);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .skills-tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .skill-tag {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: var(--text-main);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .skill-tag:hover {
+            background: var(--purple-glow);
+            transform: scale(1.05);
+        }
+
+        /* --- CONTACT & FOOTER --- */
+        .contact-box {
+            background: linear-gradient(135deg, #121216, #181822);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-box p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .social-icon.git:hover { color: #fff; background: #24292e; box-shadow: 0 0 15px rgba(255,255,255,0.2); }
+        .social-icon.linkd:hover { color: #fff; background: #0077b5; box-shadow: 0 0 15px rgba(0,119,181,0.4); }
+        .social-icon.mail:hover { color: #fff; background: var(--green-neon); box-shadow: 0 0 15px rgba(34,197,94,0.4); }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 968px) {
+            header {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding-top: 140px;
+                justify-content: center;
+            }
+            .hero-text h1 { font-size: 2.5rem; }
+            .btn-container { justify-content: center; }
+            .profile-details-grid { grid-template-columns: 1fr; gap: 3rem; }
+            nav ul { display: none; } /* Simplified for short sample */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#" class="logo glow-text-purple">SALLY.dev</a>
+        <ul>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#about">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header>
+        <div class="hero-text">
+            <h1>Hi, I'm <span class="glow-text-purple">Sally Asfour</span></h1>
+            <h2 class="glow-text-green">Full Stack Developer (with an Operations Brain)</h2>
+            <p>
+                I turn chaotic structural problems into structured web logic. Formerly executing high-level administrative strategy, I'm now writing scalable frontend and backend code. Let's build something lightweight and brilliant.
+            </p>
+            <div class="btn-container">
+                <a href="#projects" class="btn btn-primary">See My Work</a>
+                <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+            </div>
+        </div>
+        <div class="hero-image-container">
+            <div class="profile-wrapper">
+                <!-- Using your relative path mapping to the requested static folder -->
+                <img src="static/sally.jpg" alt="Sally Asfour" class="hero-image">
+            </div>
+        </div>
+    </header>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects">
+        <h2 class="section-title">Selected Repositories & Work</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <div>
+                    <h3>Mehani Platform</h3>
+                    <p>Contributed to developing a web platform designed to map out professional service providers to clients using structured, Git-based collaborative workflows.</p>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/sallyApal" target="_blank" class="project-link">View Repo →</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div>
+                    <h3>AXSOS Advanced Challenges</h3>
+                    <p>A compilation of layout configurations, Flexbox dynamic grids (GitHub Blocks), and functional validation components crafted during my core training sequence.</p>
+                </div>
+                <div class="project-links">
+                    <a href="http://github.com/stars/sallyApal/lists/axsos-advanced-challenges" target="_blank" class="project-link">View Repo →</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div>
+                    <h3>Data Analytics & Insights</h3>
+                    <p>Analytical projects utilizing Python, SQL, and Pandas to clean, process, and visualize datasets, transforming raw numbers into actionable business intelligence.</p>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/stars/sallyApal/lists/data-story" target="_blank" class="project-link">View Analysis →</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- EXPERIENCE & SKILLS SECTION -->
+    <section id="about" style="background: rgba(255,255,255,0.01);">
+        <div class="profile-details-grid">
+            
+            <!-- TIMELINE SECTION -->
+            <div>
+                <h2 class="section-title">Professional Journey</h2>
+                <div class="timeline">
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024 - PRESENT</div>
+                        <div class="timeline-title">Administration Assistant</div>
+                        <div class="timeline-company">Association of Palestinian Local Authorities (APLA)</div>
+                        <div class="timeline-desc">Supervising comprehensive operational logging systems, handling cross-department architecture, and managing foundational databases.</div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2016 - 2019</div>
+                        <div class="timeline-title">Executive Secretary</div>
+                        <div class="timeline-company">National Center for Disaster Risk Management (PalDRM)</div>
+                        <div class="timeline-desc">Engineered tracking infrastructure for vital documents, generated high-level reporting presentations, and structured critical operational datasets.</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SKILLS RADAR SECTION -->
+            <div>
+                <h2 class="section-title">Tech Blueprint</h2>
+                
+                <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--green-neon);">Frontend Architecture</h3>
+                <div class="skills-tag-container">
+                    <div class="skill-tag">HTML5 / CSS3</div>
+                    <div class="skill-tag">JavaScript</div>
+                    <div class="skill-tag">Flexbox / Grid</div>
+                </div>
+
+                <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--purple-glow);">Backend & Processing</h3>
+                <div class="skills-tag-container">
+                    <div class="skill-tag">Python Core</div>
+                    <div class="skill-tag">Node.js (Intro)</div>
+                    <div class="skill-tag">SQL Databases</div>
+                    <div class="skill-tag">Data Analysis (Pandas)</div>
+                </div>
+
+                <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--text-muted);">Deployment Tools</h3>
+                <div class="skills-tag-container">
+                    <div class="skill-tag">Git / GitHub</div>
+                    <div class="skill-tag">VS Code</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <div class="contact-box">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Let’s Optimize Something <span class="glow-text-green">Together</span></h2>
+            <p>I am looking for Junior Full Stack opportunities where I can throw clean code and absolute operational efficiency at complex problems.</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/sallyApal" target="_blank" class="social-icon git">GitHub</a>
+                <a href="https://www.linkedin.com/in/sally-riady-asfour/" target="_blank" class="social-icon linkd">LinkedIn</a>
+                <a href="mailto:sallyriady777@gmail.com" class="social-icon mail">Email Me</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Sally Asfour. Built with passion, precision, and plenty of purple glow.</p>
+    </footer>
+
+</body>
+</html>
